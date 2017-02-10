@@ -1,2 +1,2 @@
-# Semantic.Logging.Contrib
+# SemanticLogging.Contrib
 Semantic Logging Contrib
