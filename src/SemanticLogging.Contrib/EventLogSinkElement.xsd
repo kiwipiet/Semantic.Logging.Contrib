@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EventLogSinkElement"
+    targetNamespace="urn:schemas.SemanticLogging.Contrib.etw.eventLogSink"
+    xmlns="urn:schemas.SemanticLogging.Contrib.etw.eventLogSink"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+  <xs:element name="eventLogSink">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="logName" type="xs:string" use="required" />
+      <xs:attribute name="source" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

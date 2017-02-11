@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Configuration;
+using SemanticLogging.Contrib.Observable;
 using SemanticLogging.Contrib.Utility;
 
 namespace SemanticLogging.Contrib.Configuration
@@ -15,7 +16,7 @@ namespace SemanticLogging.Contrib.Configuration
     /// </summary>
     internal class EventLogSinkElement : ISinkElement
     {
-        private readonly XName sinkName = XName.Get("eventLogSink", Constants.Namespace);
+        private readonly XName sinkName = XName.Get("eventLogSink", "urn:schemas.SemanticLogging.Contrib.etw.eventLogSink");
 
         /// <summary>
         /// Determines whether this instance can create the specified configuration element.
@@ -45,7 +46,7 @@ namespace SemanticLogging.Contrib.Configuration
             Guard.ArgumentNotNull(element, "element");
 
             var subject = new EventEntrySubject();
-            subject.LogToFlatFile((string)element.Attribute("fileName"), FormatterElementFactory.Get(element));
+            subject.LogToEventLog((string)element.Attribute("logName"), (string)element.Attribute("source"), FormatterElementFactory.Get(element));
             return subject;
         }
     }

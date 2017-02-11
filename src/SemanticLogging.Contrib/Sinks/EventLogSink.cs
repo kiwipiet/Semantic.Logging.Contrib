@@ -27,13 +27,18 @@ namespace SemanticLogging.Contrib.Sinks
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly Task _asyncProcessorTask;
 
+        public EventLogSink(string logName, IEventTextFormatter formatter)
+            : this(logName, "", formatter, true)
+        {
+
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="EventLogSink" /> class.
         /// </summary>
         /// <param name="logName">Name of the EventLog.</param>
         /// <param name="formatter">The formatter for entries</param>
         /// <param name="isAsync">Specifies if the writing should be done asynchronously, or synchronously with a blocking call.</param>
-        public EventLogSink(string logName, IEventTextFormatter formatter, bool isAsync) 
+        public EventLogSink(string logName, IEventTextFormatter formatter, bool isAsync = true) 
             : this(logName, "", formatter, isAsync)
         {
             
@@ -41,7 +46,7 @@ namespace SemanticLogging.Contrib.Sinks
         /// <summary>
         /// Initializes a new instance of the <see cref="EventLogSink" /> class.
         /// </summary>
-        /// <param name="logName">Name of the EventLog.</param>
+        /// <param name="logName">Name of the EventLog</param>
         /// <param name="source">Eventlog source</param>
         /// <param name="formatter">The formatter for entries</param>
         /// <param name="isAsync">Specifies if the writing should be done asynchronously, or synchronously with a blocking call.</param>
@@ -53,6 +58,15 @@ namespace SemanticLogging.Contrib.Sinks
 
             _formatter = formatter;
             _writer = new EventLog(logName, ".", source);
+
+#if DEBUG
+            //This code needs Admin permission. Create the Source by an install script and remove this code
+            //from here.
+            if (!EventLog.SourceExists(source))
+            {
+                EventLog.CreateEventSource(source, logName);
+            }
+#endif
 
             _isAsync = isAsync;
 

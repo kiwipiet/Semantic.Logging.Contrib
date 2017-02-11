@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\EventLogSinkElement.cs" />
+    <Compile Include="EventLogLog.cs" />
+    <Compile Include="Observable\EventEntrySubject.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -65,6 +68,9 @@
     <Compile Include="Utility\Guard.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="EventLogSinkElement.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +84,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Q /R /Y $(TargetPath) $(SolutionDir)out-of-process\$(TargetFileName)
+xcopy /Q /R /Y $(ProjectDir)EventLogSinkElement.xsd $(SolutionDir)out-of-process\EventLogSinkElement.xsd</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
