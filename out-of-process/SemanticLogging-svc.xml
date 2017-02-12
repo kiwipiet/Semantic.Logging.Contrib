@@ -23,7 +23,7 @@
     </flatFileSink>
     <consoleSink name="consoleSink">
       <sources>
-        <eventSource name="MyCompanyContrib" level="LogAlways"/>
+        <eventSource name="MyCompanyContrib" level="LogAlways" />
       </sources>
     </consoleSink>
     <!--[Add any built-in or custom sink definition here]-->
